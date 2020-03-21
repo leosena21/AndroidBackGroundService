@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet,TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, StyleSheet,TouchableOpacity, Text, NativeModules } from 'react-native';
 
 import SendIntentAndroid from 'react-native-send-intent';
 
 // import { Container } from './styles';
+
+const {ToastModule} = NativeModules;
 
 export default function pages() {
  
@@ -14,10 +16,15 @@ export default function pages() {
     "reciveApp": text,
    }).then(wasOpened => {});
   }
+  
   function stop(){
    SendIntentAndroid.openApp("com.example.serviceback",{
     "reciveApp": "0",
    }).then(wasOpened => {});
+  }
+
+  function callJava(){
+    ToastModule.showText('This is Android', ToastModule.LENGTH_SHORT);
   }
 
   return (
@@ -35,6 +42,10 @@ export default function pages() {
 
       <TouchableOpacity  onPress={stop} style={styles.bt_stop}>
         <Text style={styles.text} >Stop Server</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity  onPress={callJava} style={styles.bt_start}>
+        <Text style={styles.text} >Chamar Java</Text>
       </TouchableOpacity>
         
     </View>
