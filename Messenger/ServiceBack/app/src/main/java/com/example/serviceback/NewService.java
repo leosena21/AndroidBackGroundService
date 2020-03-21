@@ -20,10 +20,12 @@ public class NewService extends Service {
             i = msg.arg2;
             Toast.makeText(getApplicationContext(), "servidor Recebeu-:" + msg.arg2, Toast.LENGTH_LONG).show();
 
-            try {
-                msg.replyTo.send(Message.obtain(null, this.hashCode(), 2, 404));
-            } catch (RemoteException e) {
-                e.printStackTrace();
+            if(msg.arg2==2){
+                try {
+                    msg.replyTo.send(Message.obtain(null, this.hashCode(), 2, 404));
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

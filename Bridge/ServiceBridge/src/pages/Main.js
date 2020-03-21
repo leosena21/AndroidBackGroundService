@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet,TouchableOpacity, Text, NativeModules } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, StyleSheet,TouchableOpacity, Text, NativeModules, DeviceEventEmitter } from 'react-native';
 
 import SendIntentAndroid from 'react-native-send-intent';
 
@@ -8,13 +8,18 @@ import SendIntentAndroid from 'react-native-send-intent';
 const {ToastModule} = NativeModules;
 
 export default function pages() {
+
+  const nativeEventListener = DeviceEventEmitter.addListener('onStop',
+  (e)=>{
+    console.log("NATIVE_EVENT");
+    console.log(e.arg2);
+    console.log(e.test);
+  })
  
   const [text, setText] = useState('');
 
   function start(){
-   SendIntentAndroid.openApp("com.example.serviceback",{
-    "reciveApp": text,
-   }).then(wasOpened => {});
+    ToastModule.doBindService();
   }
   
   function stop(){
@@ -24,12 +29,14 @@ export default function pages() {
   }
 
   function callJava(){
-    ToastModule.showText('This is Android', ToastModule.LENGTH_SHORT);
+    ToastModule.withMsg(text);
+   // ToastModule.showText('This is Android', ToastModule.LENGTH_SHORT);
   }
 
   return (
     <View style={styles.container}>
       <TextInput
+        keyboardType = "numeric"
         style={styles.input}
         placeholder = "Digite o estado do serviço"
         onChangeText={setText}
