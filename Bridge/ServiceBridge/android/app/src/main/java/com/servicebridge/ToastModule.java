@@ -1,6 +1,5 @@
 package com.servicebridge;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -14,12 +13,10 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
@@ -37,10 +34,32 @@ public class ToastModule extends ReactContextBaseJavaModule {
 
     Messenger mService = null;
     boolean mIsBound;
-    Messenger mMessenger = new Messenger(new IncomingHandler());
+    Handler mad;
+    Messenger mMessenger;// = new Messenger(mad);
+    int count1 = 0;
+    int count2 = 0;
 
     public ToastModule(ReactApplicationContext context) { //constructor
         super(context);
+        count1++;
+
+        mad = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                count2++;
+                try {
+                    WritableMap params = Arguments.createMap(); // add here the data you want to send
+                    params.putInt("arg2", msg.arg2); // <- example
+                    params.putInt("test", count2); // <- example
+                    getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                            .emit("onStop", params);
+                } finally {
+                     Toast.makeText(getReactApplicationContext(),count1 + " " + count2, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+        mMessenger = new Messenger(mad);
 
 //        new Thread(){
 //            public void run(){
@@ -81,21 +100,21 @@ public class ToastModule extends ReactContextBaseJavaModule {
         }
     }
 
-    class IncomingHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            try {
-                WritableMap params = Arguments.createMap(); // add here the data you want to send
-                params.putInt("arg2", msg.arg2); // <- example
-                params.putInt("test", 3); // <- example
-                getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("onStop", params);
-            } finally {
-
-            }
-            // Toast.makeText(getReactApplicationContext(), "RespRecebidaServidor--:"+msg.arg2, Toast.LENGTH_LONG).show();
-        }
-    }
+//    class IncomingHandler extends Handler {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            try {
+//                WritableMap params = Arguments.createMap(); // add here the data you want to send
+//                params.putInt("arg2", msg.arg2); // <- example
+//                params.putInt("test", 3); // <- example
+//                getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+//                        .emit("onStop", params);
+//            } finally {
+//
+//            }
+//            // Toast.makeText(getReactApplicationContext(), "RespRecebidaServidor--:"+msg.arg2, Toast.LENGTH_LONG).show();
+//        }
+//    }
 
     private ServiceConnection mConnection = new ServiceConnection() {
 

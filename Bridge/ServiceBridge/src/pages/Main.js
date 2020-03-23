@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet,TouchableOpacity, Text, NativeModules, DeviceEventEmitter } from 'react-native';
+import { View, TextInput, StyleSheet,TouchableOpacity, Text, NativeModules, NativeEventEmitter } from 'react-native';
 
 import SendIntentAndroid from 'react-native-send-intent';
 
 // import { Container } from './styles';
 
 const {ToastModule} = NativeModules;
+const { CalendarManager } = NativeModules;
+const calendarManagerEmitter = new NativeEventEmitter(CalendarManager);
 
 export default function pages() {
 
-  const nativeEventListener = DeviceEventEmitter.addListener('onStop',
-  (e)=>{
-    console.log("NATIVE_EVENT");
-    console.log(e.arg2);
-    console.log(e.test);
-  })
+  function listening(){
+    const subscription = calendarManagerEmitter.addListener(
+      'onStop',
+      (e) => {
+        console.log(e.test)
+        subscription.remove();
+      }
+    );
+  }
  
   const [text, setText] = useState('');
 
@@ -29,6 +34,7 @@ export default function pages() {
   }
 
   function callJava(){
+    listening();
     ToastModule.withMsg(text);
    // ToastModule.showText('This is Android', ToastModule.LENGTH_SHORT);
   }

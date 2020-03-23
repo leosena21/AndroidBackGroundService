@@ -95906,29 +95906,46 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
   });
   exports.default = void 0;
 
-  var _react = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[1], "react"));
+  var _classCallCheck2 = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[1], "@babel/runtime/helpers/classCallCheck"));
 
-  var _Main = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[2], "./pages/Main"));
+  var _createClass2 = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[2], "@babel/runtime/helpers/createClass"));
+
+  var _possibleConstructorReturn2 = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[3], "@babel/runtime/helpers/possibleConstructorReturn"));
+
+  var _getPrototypeOf2 = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/getPrototypeOf"));
+
+  var _inherits2 = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[5], "@babel/runtime/helpers/inherits"));
+
+  var _react = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[6], "react"));
+
+  var _Main = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[7], "./pages/Main"));
 
   var _jsxFileName = "C:\\Users\\leose\\Google Drive\\Documentos\\Projetos Git\\AndroidBackGroundService\\Bridge\\ServiceBridge\\src\\index.js";
 
-  function App() {
-    return _react.default.createElement(_Main.default, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 6
+  var App = function (_React$Component) {
+    (0, _inherits2.default)(App, _React$Component);
+
+    function App() {
+      (0, _classCallCheck2.default)(this, App);
+      return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(App).apply(this, arguments));
+    }
+
+    (0, _createClass2.default)(App, [{
+      key: "render",
+      value: function render() {
+        return _react.default.createElement(_Main.default, {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 8
+          }
+        });
       }
-    });
-  }
+    }]);
+    return App;
+  }(_react.default.Component);
 
-  _c = App;
-  var _default = App;
-  exports.default = _default;
-
-  var _c;
-
-  $RefreshReg$(_c, "App");
-},447,[1,54,448],"src\\index.js");
+  exports.default = App;
+},447,[1,24,25,32,34,37,54,448],"src\\index.js");
 __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, exports, _dependencyMap) {
   var _interopRequireDefault = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/interopRequireDefault");
 
@@ -95957,6 +95974,8 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
     var nativeEventListener = _reactNative.DeviceEventEmitter.addListener('onStop', function (e) {
       console.log("NATIVE_EVENT");
+      console.log(e.arg2);
+      console.log(e.test);
     });
 
     var _useState = (0, _react.useState)(''),
@@ -95975,62 +95994,63 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
     }
 
     function callJava() {
-      ToastModule.withMsg(5);
+      ToastModule.withMsg(text);
     }
 
     return _react.default.createElement(_reactNative.View, {
       style: styles.container,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 35
+        lineNumber: 36
       }
     }, _react.default.createElement(_reactNative.TextInput, {
+      keyboardType: "numeric",
       style: styles.input,
       placeholder: "Digite o estado do servi\xE7o",
       onChangeText: setText,
       value: text,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 36
+        lineNumber: 37
       }
     }), _react.default.createElement(_reactNative.TouchableOpacity, {
       onPress: start,
       style: styles.bt_start,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 43
+        lineNumber: 45
       }
     }, _react.default.createElement(_reactNative.Text, {
       style: styles.text,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 44
+        lineNumber: 46
       }
     }, "Start Server")), _react.default.createElement(_reactNative.TouchableOpacity, {
       onPress: stop,
       style: styles.bt_stop,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 47
+        lineNumber: 49
       }
     }, _react.default.createElement(_reactNative.Text, {
       style: styles.text,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 48
+        lineNumber: 50
       }
     }, "Stop Server")), _react.default.createElement(_reactNative.TouchableOpacity, {
       onPress: callJava,
       style: styles.bt_start,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 51
+        lineNumber: 53
       }
     }, _react.default.createElement(_reactNative.Text, {
       style: styles.text,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 52
+        lineNumber: 54
       }
     }, "Chamar Java")));
   }
